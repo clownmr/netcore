@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +22,7 @@ namespace Com.SSO.AuthenticationServer
 
             if (env.IsDevelopment())
             {
+                //有关使用用户密钥存储的详细信息，参见
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets();
             }
@@ -35,11 +32,12 @@ namespace Com.SSO.AuthenticationServer
         }
 
         public IConfigurationRoot Configuration { get; }
-
+        //这个方法被运行时调用。使用此方法将服务添加到容器中。
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            // Add framework services. 添加框架服务
+            //https://damienbod.com/2016/08/26/asp-net-core-1-0-with-mysql-and-entity-framework-core/ 添加MYSQL示例
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -61,7 +59,7 @@ namespace Com.SSO.AuthenticationServer
                 .AddInMemoryClients(Config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
         }
-
+        //这个方法被运行时调用。用这个方法来配置HTTP请求管道。
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
@@ -83,7 +81,7 @@ namespace Com.SSO.AuthenticationServer
 
             app.UseIdentity();
             app.UseIdentityServer();
-
+            //在下面添加外部认证中间件。要配置它们，请参阅
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>

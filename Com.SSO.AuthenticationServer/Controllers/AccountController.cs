@@ -152,6 +152,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
+            //请求重定向到外部登录提供程序。
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
@@ -384,7 +385,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
             {
                 return View("Error");
             }
-
+            //生成令牌并发送
             // Generate the token and send it
             var code = await _userManager.GenerateTwoFactorTokenAsync(user, model.SelectedProvider);
             if (string.IsNullOrWhiteSpace(code))
@@ -411,6 +412,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> VerifyCode(string provider, bool rememberMe, string returnUrl = null)
         {
+            //要求用户已经登录通过用户名/密码或外部登录
             // Require that the user has already logged in via username/password or external login
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
