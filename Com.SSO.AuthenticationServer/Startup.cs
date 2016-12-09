@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Com.SSO.AuthenticationServer.Data;
 using Com.SSO.AuthenticationServer.Models;
 using Com.SSO.AuthenticationServer.Services;
+using MySQL.Data.Entity.Extensions;
 
 namespace Com.SSO.AuthenticationServer
 {
@@ -37,9 +38,10 @@ namespace Com.SSO.AuthenticationServer
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services. 添加框架服务
-            //https://damienbod.com/2016/08/26/asp-net-core-1-0-with-mysql-and-entity-framework-core/ 添加MYSQL示例
+            //https://docs.efproject.net/en/latest/providers/index.html
+            //添加程序集 SapientGuardian.EntityFrameworkCore.MySql
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
