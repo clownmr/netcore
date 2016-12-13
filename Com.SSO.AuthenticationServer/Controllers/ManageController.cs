@@ -129,7 +129,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
             return RedirectToAction(nameof(Index), "Manage");
         }
 
-        //
+        //禁用双因素认证
         // POST: /Manage/DisableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]

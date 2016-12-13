@@ -55,14 +55,15 @@ namespace Com.SSO.AuthenticationServer.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-
                 //这不算登录失败对帐户锁定
                 //启用密码失败触发帐户锁定、设置lockoutonfailure：真
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    //用户登录
                     _logger.LogInformation(1, "User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -70,18 +71,19 @@ namespace Com.SSO.AuthenticationServer.Controllers
                 {
                     return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning(2, "User account locked out.");
+                if (result.IsLockedOut)//锁定用户账户
+                {//User account locked out.
+                    _logger.LogWarning(2, "锁定用户账户");
                     return View("Lockout");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    //提示无效的登录尝试 Invalid login attempt.
+                    ModelState.AddModelError(string.Empty, "无效的登录方式");
                     return View(model);
                 }
             }
-            //如果我们走了这么远，一些失败，显示形式
+            //如果我们走到这里，一但失败，显示形式
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -122,7 +124,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
 
 
-
+                    //isPersistent 是否持久
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToLocal(returnUrl);
@@ -155,6 +157,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
             //请求重定向到外部登录提供程序。
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
+            //配置外部身份验证属性
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
@@ -227,6 +230,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
                     if (result.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        //用户创建了一个使用{名称}提供程序的帐户。
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);
                     }
@@ -358,6 +362,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl = null, bool rememberMe = false)
         {
+            //得到的双因素身份认证用户异步
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
