@@ -3,7 +3,7 @@
 
   "dependencies": {
     "Microsoft.NETCore.App": {
-      "version": "1.0.1",
+      "version": "1.0.0",
       "type": "platform"
     },
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
@@ -45,7 +45,8 @@
       "type": "build"
     },
     "IdentityServer4.AccessTokenValidation": "1.0.1-rc4",
-    "Microsoft.AspNetCore.Authentication.OpenIdConnect": "1.0.0"
+    "Microsoft.AspNetCore.Authentication.OpenIdConnect": "1.0.0",
+    "Com.Infrastructure": "1.0.0-*"
   },
 
   "tools": {

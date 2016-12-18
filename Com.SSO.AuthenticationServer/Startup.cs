@@ -9,6 +9,9 @@ using Com.SSO.AuthenticationServer.Data;
 using Com.SSO.AuthenticationServer.Models;
 using Com.SSO.AuthenticationServer.Services;
 using MySQL.Data.Entity.Extensions;
+using System.Security.Cryptography;
+using System;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Com.SSO.AuthenticationServer
 {
@@ -20,13 +23,15 @@ namespace Com.SSO.AuthenticationServer
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
+         
+            //如果是开发环境
             if (env.IsDevelopment())
             {
                 //有关使用用户密钥存储的详细信息，参见
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets();
+               // builder.AddUserSecrets();
             }
+          
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
@@ -37,6 +42,16 @@ namespace Com.SSO.AuthenticationServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //煞笔案例居然不写 特么的也是醉了。
+            #region MyRegion
+            //RSA：证书长度2048以上，否则抛异常
+            //配置AccessToken的加密证书
+            var rsa = new RSACryptoServiceProvider();
+            //从配置文件获取加密证书
+            rsa.ImportCspBlob(Convert.FromBase64String(Configuration["SigningCredential"]));
+            #endregion
+
+
             // Add framework services. 添加框架服务
             //https://docs.efproject.net/en/latest/providers/index.html
             //添加程序集 SapientGuardian.EntityFrameworkCore.MySql
@@ -52,9 +67,11 @@ namespace Com.SSO.AuthenticationServer
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
-
+            //IdentityServer4授权服务配置
             services.AddIdentityServer()
-                .AddTemporarySigningCredential()
+                .AddSigningCredential(new RsaSecurityKey(rsa))//设置加密证书
+                // .AddTemporarySigningCredential() //测试的时候可使用临时的证书
+               // .AddTemporarySigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
@@ -76,7 +93,10 @@ namespace Com.SSO.AuthenticationServer
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //  app.UseExceptionHandler("/Home/Error");
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+                app.UseBrowserLink();
             }
 
             app.UseStaticFiles();

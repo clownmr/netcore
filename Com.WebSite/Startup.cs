@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IdentityModel.Tokens.Jwt;
+using Com.Infrastructure.Config;
 
 namespace Com.WebSite
 {
@@ -59,7 +60,7 @@ namespace Com.WebSite
                 AuthenticationScheme = "oidc",
                 SignInScheme = "Cookies",
 
-                Authority = "http://localhost:5000",
+                Authority = Domin.AuthorizationSrvUrl,
                 RequireHttpsMetadata = false,
 
                 ClientId = "mvc",

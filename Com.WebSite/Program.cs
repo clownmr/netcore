@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-
+using Com.Infrastructure.Config;
 namespace Com.WebSite
 {
     public class Program
@@ -13,7 +13,7 @@ namespace Com.WebSite
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
-               .UseUrls("http://localhost:5002")
+                .UseUrls(Domin.WebSiteUrl)
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()

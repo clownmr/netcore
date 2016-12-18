@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Com.Infrastructure.Config;
 
 namespace Com.SSO.AuthenticationServer
 {
@@ -13,7 +14,7 @@ namespace Com.SSO.AuthenticationServer
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
-                .UseUrls("http://localhost:5000")
+                .UseUrls(Domin.AuthorizationSrvUrl)
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
