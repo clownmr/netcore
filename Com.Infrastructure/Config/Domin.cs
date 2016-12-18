@@ -15,6 +15,6 @@ namespace Com.Infrastructure.Config
         /// <summary>
         /// 主网站地址http://localhost:
         /// </summary>
-        public const string WebSiteUrl = "http://60.205.187.53:5002";
+        public const string WebSiteUrl = "http://www.itime365.com";
     }
 }

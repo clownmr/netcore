@@ -42,7 +42,7 @@ namespace Com.SSO.AuthenticationServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //煞笔案例居然不写 特么的也是醉了。
+            //煞笔案例居然不写明没有这个就不能跳转 特么的也是醉了。
             #region MyRegion
             //RSA：证书长度2048以上，否则抛异常
             //配置AccessToken的加密证书
