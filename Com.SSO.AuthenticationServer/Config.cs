@@ -1,7 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-using Com.Infrastructure.Config;
+﻿using Com.Infrastructure.Config;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Services.InMemory;
@@ -30,9 +27,11 @@ namespace Com.SSO.AuthenticationServer
             };
         }
 
+        //客户端要访问资源（又名范围）
         // clients want to access resources (aka scopes)
         public static IEnumerable<Client> GetClients()
         {
+            //客户端的凭据
             // client credentials client
             return new List<Client>
             {
@@ -47,7 +46,7 @@ namespace Com.SSO.AuthenticationServer
                     },
                     AllowedScopes = { "api1" }
                 },
-
+                //资源所有者密码授予客户端
                 // resource owner password grant client
                 new Client
                 {
@@ -60,7 +59,7 @@ namespace Com.SSO.AuthenticationServer
                     },
                     AllowedScopes = { "api1" }
                 },
-
+                //OpenID连接混合流和客户端证书的客户（MVC）
                 // OpenID Connect hybrid flow and client credentials client (MVC)
                 new Client
                 {

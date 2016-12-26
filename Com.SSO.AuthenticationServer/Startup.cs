@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -71,11 +70,11 @@ namespace Com.SSO.AuthenticationServer
             services.AddIdentityServer()
                 .AddSigningCredential(new RsaSecurityKey(rsa))//设置加密证书
                 // .AddTemporarySigningCredential() //测试的时候可使用临时的证书
-               // .AddTemporarySigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
+            //    .AddInMemoryUsers(Config.GetUsers())
                 .AddAspNetIdentity<ApplicationUser>();
         }
         //这个方法被运行时调用。用这个方法来配置HTTP请求管道。

@@ -58,6 +58,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+
                 //这不算登录失败对帐户锁定
                 //启用密码失败触发帐户锁定、设置lockoutonfailure：真
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);

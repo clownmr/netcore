@@ -12,6 +12,7 @@ namespace Com.SSO.AuthenticationServer.Services
     {
         public Task SendEmailAsync(string email, string subject, string message)
         {
+            //插入您的电子邮件服务在这里发送电子邮件
             // Plug in your email service here to send an email.
             return Task.FromResult(0);
         }

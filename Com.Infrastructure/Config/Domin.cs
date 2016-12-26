@@ -10,7 +10,7 @@ namespace Com.Infrastructure.Config
         /// <summary>
         /// 登录授权地址http://localhost:
         /// </summary>
-        public const string AuthorizationSrvUrl = "http://60.205.187.53:5000";
+        public const string AuthorizationSrvUrl = "http://oauth.itime365.com";
 
         /// <summary>
         /// 主网站地址http://localhost:
