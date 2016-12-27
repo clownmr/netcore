@@ -13,6 +13,7 @@ namespace Com.SSO.AuthenticationServer.Controllers
         {
             return View();
         }
+
         [Authorize]
         public IActionResult About()
         {

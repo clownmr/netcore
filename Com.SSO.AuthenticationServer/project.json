@@ -47,7 +47,6 @@
     "IdentityServer4": "1.0.0-rc4-update1",
     "IdentityServer4.AspNetIdentity": "1.0.0-rc4-update1",
     "IdentityServer4.EntityFramework": "1.0.0-rc4-update1",
-    "SapientGuardian.EntityFrameworkCore.MySql": "7.1.14",
     "Com.Infrastructure": "1.0.0-*"
   },
 
