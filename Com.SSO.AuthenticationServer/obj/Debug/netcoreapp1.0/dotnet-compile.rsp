@@ -240,6 +240,7 @@ D:\src\Com.SSO.AuthenticationServer\Config.cs
 D:\src\Com.SSO.AuthenticationServer\Program.cs
 D:\src\Com.SSO.AuthenticationServer\Startup.cs
 D:\src\Com.SSO.AuthenticationServer\Controllers\AccountController.cs
+D:\src\Com.SSO.AuthenticationServer\Controllers\ConsentController.cs
 D:\src\Com.SSO.AuthenticationServer\Controllers\HomeController.cs
 D:\src\Com.SSO.AuthenticationServer\Data\Migrations\IdentityServer\ConfigurationDb\20161227091654_InitialIdentityServerConfigurationDbMigration.cs
 D:\src\Com.SSO.AuthenticationServer\Data\Migrations\IdentityServer\ConfigurationDb\20161227091654_InitialIdentityServerConfigurationDbMigration.Designer.cs

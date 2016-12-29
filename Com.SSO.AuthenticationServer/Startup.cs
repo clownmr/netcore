@@ -164,7 +164,7 @@ namespace Com.SSO.AuthenticationServer
     
             app.UseStaticFiles();
 
-            app.UseIdentity();
+          //  app.UseIdentity();
             app.UseIdentityServer();
             //在下面添加外部认证中间件。要配置它们，请参阅
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715

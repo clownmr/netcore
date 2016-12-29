@@ -4,34 +4,40 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using IdentityServer4.Services;
+using Com.SSO.AuthenticationServer.Models;
 
 namespace Com.SSO.AuthenticationServer.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IIdentityServerInteractionService _interaction;
+
+        public HomeController(IIdentityServerInteractionService interaction)
+        {
+            _interaction = interaction;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
-        public IActionResult About()
+        /// <summary>
+        /// Shows the error page
+        /// </summary>
+        public async Task<IActionResult> Error(string errorId)
         {
-            ViewData["Message"] = "Your application description page.";
+            var vm = new ErrorViewModel();
 
-            return View();
-        }
+            // retrieve error details from identityserver
+            var message = await _interaction.GetErrorContextAsync(errorId);
+            if (message != null)
+            {
+                vm.Error = message;
+            }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View();
+            return View("Error", vm);
         }
     }
 }
